@@ -10,5 +10,6 @@ import nb.tech.urlshortener.entity.UrlShortenerEntity;
 public interface UrlShortenerRepository extends JpaRepository<UrlShortenerEntity, Long>{
 
     List<UrlShortenerEntity> findByExpirationTimeBefore(LocalDateTime expirationTime);
+    UrlShortenerEntity findByUrlShorterner(String urlShorterner);
 
 }

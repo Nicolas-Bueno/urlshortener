@@ -1,7 +1,6 @@
 package nb.tech.urlshortener.service;
 
 import java.time.LocalDateTime;
-import java.time.temporal.ChronoUnit;
 import java.util.List;
 
 import org.apache.commons.lang3.RandomStringUtils;
@@ -21,12 +20,11 @@ public class UrlShortenerService {
 
     public String shortenUrl(String originUrl){
         String shortenedUrl = RandomStringUtils.randomAlphanumeric(5,10);
-        String url = "https://xxx.com/"+shortenedUrl;
         LocalDateTime expirationTime = LocalDateTime.now().plusMinutes(1);
 
         UrlShortenerEntity entity = new UrlShortenerEntity();
         entity.setUrlOrigin(originUrl);
-        entity.setUrlShorterner(url);
+        entity.setUrlShorterner(shortenedUrl);
         entity.setExpirationTime(expirationTime);
         urlShortenerRepository.save(entity);
 
@@ -35,18 +33,20 @@ public class UrlShortenerService {
     }
 
     
-    @Scheduled(fixedRate = 60000) // Executa a cada minuto
+    @Scheduled(fixedRate = 60000)
     public void deleteExpiredUrls() {
         LocalDateTime now = LocalDateTime.now();
         List<UrlShortenerEntity> expiredUrls = urlShortenerRepository.findByExpirationTimeBefore(now);
         urlShortenerRepository.deleteAll(expiredUrls);
     }
 
-    @Scheduled(fixedRate = 60000)
-    public void executeTask() {
-        // Este método será executado a cada minuto
-        System.out.println("Tarefa agendada executada a cada minuto.");
+    public String findByShortUrl(String urlShorterner) {
+        UrlShortenerEntity entity = urlShortenerRepository.findByUrlShorterner(urlShorterner);
+        if (entity != null) {
+            return entity.getUrlOrigin();
+        } else {
+            return null;
+        }
     }
-
-
+    
 }

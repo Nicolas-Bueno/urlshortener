@@ -1,10 +1,6 @@
 package nb.tech.urlshortener.entity;
 
 import java.time.LocalDateTime;
-
-import org.springframework.stereotype.Indexed;
-
-import jakarta.annotation.Generated;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -26,7 +22,7 @@ public class UrlShortenerEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    
+
     private String urlOrigin;
 
     private String urlShorterner;
