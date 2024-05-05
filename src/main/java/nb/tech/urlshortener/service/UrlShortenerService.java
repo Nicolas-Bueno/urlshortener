@@ -21,12 +21,12 @@ public class UrlShortenerService {
 
     public String shortenUrl(String originUrl){
         String shortenedUrl = RandomStringUtils.randomAlphanumeric(5,10);
-
+        String url = "https://xxx.com/"+shortenedUrl;
         LocalDateTime expirationTime = LocalDateTime.now().plusMinutes(1);
 
         UrlShortenerEntity entity = new UrlShortenerEntity();
         entity.setUrlOrigin(originUrl);
-        entity.setUrlShorterner(shortenedUrl);
+        entity.setUrlShorterner(url);
         entity.setExpirationTime(expirationTime);
         urlShortenerRepository.save(entity);
 
